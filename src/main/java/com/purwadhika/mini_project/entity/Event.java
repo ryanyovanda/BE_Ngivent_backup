@@ -43,9 +43,9 @@ public class Event implements Serializable {
     @Column(name = "available_seats", nullable = false)
     private Integer availableSeats;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organizer_id")
-    private User organizer;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "organizer_id")
+//    private User organizer;
 
     @NotNull
     @Column(name = "created_at", nullable = false)
