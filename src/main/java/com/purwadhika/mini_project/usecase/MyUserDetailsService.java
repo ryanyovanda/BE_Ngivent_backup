@@ -1,7 +1,7 @@
 package com.purwadhika.mini_project.usecase;
 
 
-import com.purwadhika.mini_project.common.security.UserPrincipal;
+import com.purwadhika.mini_project.infrastructure.security.UserPrincipal;
 import com.purwadhika.mini_project.entity.Users;
 import com.purwadhika.mini_project.infrastructure.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

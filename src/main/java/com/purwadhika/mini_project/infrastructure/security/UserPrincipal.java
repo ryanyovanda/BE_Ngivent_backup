@@ -1,4 +1,4 @@
-package com.purwadhika.mini_project.common.security;
+package com.purwadhika.mini_project.infrastructure.security;
 
 
 import com.purwadhika.mini_project.entity.Users;
@@ -6,10 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.security.PrivateKey;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class UserPrincipal implements UserDetails   {
 

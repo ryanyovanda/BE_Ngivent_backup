@@ -44,7 +44,7 @@ public class Users {
         this.email = email;
     }
 
-    public String getReferal_code() {
+    public String getReferral_code() {
         return referral_code;
     }
 
@@ -54,10 +54,10 @@ public class Users {
     @Override
     public String toString() {
         return "Users{" +
-                "user_id=" + user_id +
+                "user_id=" + user_id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", referall_code='" + referral_code + '\'' +
+                ", referal_code='" + referral_code + '\'' +
                 '}';
     }
 }
