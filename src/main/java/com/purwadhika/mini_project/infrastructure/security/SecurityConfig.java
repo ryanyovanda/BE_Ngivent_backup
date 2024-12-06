@@ -24,7 +24,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, RequestContextFilter requestContextFilter) throws Exception {
     return http
             .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(request -> request.anyRequest().authenticated())
+            .authorizeHttpRequests(request -> {
+                request.requestMatchers("/register","/register/moderator",  "/login", "/h2-console/**").permitAll();
+                request.anyRequest().authenticated();
+            })
             .httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .build();

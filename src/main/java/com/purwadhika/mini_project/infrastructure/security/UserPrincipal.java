@@ -1,7 +1,7 @@
 package com.purwadhika.mini_project.infrastructure.security;
 
 
-import com.purwadhika.mini_project.entity.Users;
+import com.purwadhika.mini_project.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,8 +11,8 @@ import java.util.Collections;
 
 public class UserPrincipal implements UserDetails   {
 
-    private Users user;
-    public UserPrincipal(Users user) {
+    private User user;
+    public UserPrincipal(User user) {
         this.user = user;
 
     }
