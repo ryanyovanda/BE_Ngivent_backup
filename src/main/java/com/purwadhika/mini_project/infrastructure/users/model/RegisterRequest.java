@@ -19,7 +19,7 @@ public class RegisterRequest {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        user.setReferralCode("DUMMY");
+        user.setReferralCode(referral_code);
         Set<Roles> roles = new HashSet<>();
         user.setRoles(roles);
         return user;

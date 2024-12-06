@@ -7,11 +7,16 @@ import com.purwadhika.mini_project.infrastructure.users.model.RegisterRequest;
 import com.purwadhika.mini_project.infrastructure.users.repository.RoleRepository;
 import com.purwadhika.mini_project.infrastructure.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     private final UserRepository repository;
     private final RoleRepository roleRepository;
@@ -41,4 +46,10 @@ public class UserService {
         return repository.save(newUser);
     }
 
+    public String verfiy(User user) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+    if (authentication.isAuthenticated())
+        return "Login successful";
+    return "Invalid credentials";
+    }
 }

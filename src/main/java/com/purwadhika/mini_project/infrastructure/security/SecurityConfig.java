@@ -3,9 +3,11 @@ package com.purwadhika.mini_project.infrastructure.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,11 +25,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, RequestContextFilter requestContextFilter) throws Exception {
     return http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(request -> {
-                request.requestMatchers("/register","/register/moderator",  "/login", "/h2-console/**").permitAll();
-                request.anyRequest().authenticated();
-            })
+                .csrf(AbstractHttpConfigurer::disable)
+//                .cors(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth
+                                //  Define public routes
+                                .requestMatchers("/error/**").permitAll()
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/register").permitAll()
+                                .requestMatchers("/register/moderator").permitAll()
+//                        .requestMatchers("/api/v1/user").permitAll()
+//                        .requestMatchers("/api/v1/test/**").permitAll()
+//                                .requestMatchers(HttpMethod.GET,"/api/v1/event").permitAll()
+//                                .requestMatchers(HttpMethod.GET,"/api/v1/event/**").permitAll()
+                                //  Define rest of the routes to be private
+                                .anyRequest().authenticated()
+                )
             .httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .build();
@@ -39,9 +52,13 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }

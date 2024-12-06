@@ -24,4 +24,9 @@ public class UserController {
     public User registerModerator(@RequestBody RegisterModeratorRequest user) {
         return service.register(user, true);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        return service.verfiy(user);
+    }
 }

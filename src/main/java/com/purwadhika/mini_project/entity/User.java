@@ -12,6 +12,7 @@ import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -38,8 +39,9 @@ public class User {
     @Column(name = "password", nullable = false, length = Integer.MAX_VALUE)
     private String password;
 
-    @Size(max = 20)
-    @Column(name = "referral_code", length = 20)
+//    @NotNull
+    @Size(max = 50)
+    @Column(name = "referral_code", length = 50)
     private String referralCode;
 
     @NotNull
@@ -63,6 +65,7 @@ public class User {
     public void prePersist() {
         this.createdAt = OffsetDateTime.now();
         this.updatedAt = OffsetDateTime.now();
+        this.referralCode = UUID.randomUUID().toString();
     }
 
     @PreUpdate
