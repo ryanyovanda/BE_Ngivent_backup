@@ -1,10 +1,12 @@
 package com.purwadhika.mini_project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -22,13 +24,13 @@ public class Review implements Serializable {
     @Column(name = "review_id", nullable = false)
     private Long reviewId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;  // The user who left the review
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User userId;  // The user who left the review
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
-    private Event event;  // The event being reviewed
+    private Event eventId;  // The event being reviewed
 
     @NotNull
     @Min(value = 1, message = "Rating must be between 1 and 5")
@@ -40,10 +42,12 @@ public class Review implements Serializable {
     private String feedback;  // Textual feedback from the user (optional)
 
     @NotNull
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
 
     @NotNull
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
 

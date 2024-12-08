@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ public class Discount implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
+    private Event eventId;
 
     @NotNull
     @Column(name = "discount_percentage", nullable = false)
@@ -45,9 +46,13 @@ public class Discount implements Serializable {
     @Column(name = "end_date", nullable = false)
     private OffsetDateTime endDate;
 
+    @NotNull
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
 
+    @NotNull
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
 

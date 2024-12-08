@@ -20,6 +20,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     // Fetch events by location
     Page<Event> findByLocationContainingIgnoreCase(String location, Pageable pageable);
 
-    // Fetch events by organizer ID (if applicable)
-    Page<Event> findByOrganizerId(Long organizerId, Pageable pageable);
+//    // Fetch events by organizer ID (if applicable)
+//    Page<Event> findByOrganizerId(Long organizerId, Pageable pageable);
 }

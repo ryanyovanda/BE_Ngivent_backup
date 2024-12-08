@@ -1,6 +1,7 @@
 package com.purwadhika.mini_project.infrastructure.events.dto;
 
 import com.purwadhika.mini_project.entity.Event;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -14,17 +15,17 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class CreateEventRequestDTO {
 
-    @NotNull
-    private Long organizerId;
+//    @NotNull
+//    private Long organizerId;
 
-    @NotNull
+    @NotNull(message = "Category ID is required")
     private Long categoryId;
 
     @NotNull
     private String imageUrl;
 
-    @Size(max = 100)
-    @NotNull
+    @Size(min = 5, max = 255, message = "Title must be between 5 and 255 characters")
+    @NotNull(message = "Title is required")
     private String title;
 
     @NotNull
@@ -34,6 +35,7 @@ public class CreateEventRequestDTO {
     @NotNull
     private String location;
 
+    @Future(message = "Event date must be in the future")
     @NotNull
     private String eventDate;
 

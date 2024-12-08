@@ -23,17 +23,17 @@ public class Event {
     @Column(name = "event_id", nullable = false)
     private Long eventId;
 
-    // Many-to-One relationship with User (organizer)
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "organizer_id", nullable = false)
-    private User organizer;
-
+//    // Many-to-One relationship with User (organizer)
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "organizer_id", nullable = false)
+//    private User organizerId;
+//
     // Category for the event
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    private Category categoryId;
 
     @NotNull
     @Column(name = "image_url", length = 500)
@@ -77,12 +77,15 @@ public class Event {
     @Column(name = "allocated_seats", nullable = false)
     private Integer allocatedSeats;
 
-    @NotNull
+    @Column(name = "sold_seats", nullable = false)
+    private Integer soldSeats;
+
     @Column(name = "available_seats", nullable = false)
     private Integer availableSeats;
 
-    @Column(name = "sold_seats", nullable = false)
-    private Integer soldSeats = 0;
+    public void calculateAvailableSeats() {
+        this.availableSeats = this.allocatedSeats - this.soldSeats;
+    }
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
@@ -96,22 +99,6 @@ public class Event {
 
     @Column(name = "deleted_at")
     private OffsetDateTime deletedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = OffsetDateTime.now();
-        updatedAt = OffsetDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = OffsetDateTime.now();
-    }
-
-    @PreRemove
-    protected void onRemove() {
-        deletedAt = OffsetDateTime.now();
-    }
 
     // Validation for date consistency
     @AssertTrue(message = "End date must be after start date")
