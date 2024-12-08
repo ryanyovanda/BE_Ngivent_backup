@@ -6,39 +6,25 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Set;
+
 
 @Getter
 @Setter
 @Entity
-@Table(name = "transactions") // Reverted to 'transaction' table name
-public class Transaction implements Serializable {
+@Table(name = "categories")
+public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_id_gen")
-    @SequenceGenerator(name = "transaction_id_gen", sequenceName = "transaction_transaction_id_seq", allocationSize = 1)
-    @Column(name = "transaction_id", nullable = false)
-    private Long transactionId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_id_gen")
+    @SequenceGenerator(name = "categories_id_gen", sequenceName = "categories_category_id_seq", allocationSize = 1)
+    @Column(name = "category_id", nullable = false)
+    private Long categoryId;
 
-    // Many-to-One relationship with User (the customer making the transaction)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User userId;
-
-    // Many-to-One relationship with Event (the event being purchased)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event eventId;
-
-    @NotNull
-    @Column(name = "total_price", nullable = false)
-    private BigDecimal totalPrice; // Using BigDecimal for precision in financial calculations
-
-    @Column(name = "discount")
-    private BigDecimal discount; // Discount applied to the transaction, if any
+    @Column(name = "name", nullable = false, length = 100)
+    private String name;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
