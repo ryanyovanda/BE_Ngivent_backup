@@ -6,6 +6,7 @@ import com.purwadhika.mini_project.infrastructure.users.model.RegisterModeratorR
 import com.purwadhika.mini_project.infrastructure.users.model.RegisterRequest;
 import com.purwadhika.mini_project.infrastructure.users.repository.RoleRepository;
 import com.purwadhika.mini_project.infrastructure.users.repository.UserRepository;
+import com.purwadhika.mini_project.usecase.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,9 @@ public class UserService {
 
     private final UserRepository repository;
     private final RoleRepository roleRepository;
+
+    @Autowired
+    private JWTService jwtService;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -47,9 +51,13 @@ public class UserService {
     }
 
     public String verfiy(User user) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        Authentication authentication =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
     if (authentication.isAuthenticated())
-        return "Login successful";
+        return jwtService.generateToken(user.getEmail());
+
     return "Invalid credentials";
     }
+
+
 }

@@ -6,6 +6,9 @@ import com.purwadhika.mini_project.infrastructure.users.model.RegisterModeratorR
 import com.purwadhika.mini_project.infrastructure.users.model.RegisterRequest;
 import com.purwadhika.mini_project.usecase.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authorization.AuthenticatedAuthorizationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private UserService service;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
 
     @PostMapping("/register")
     public User register(@RequestBody RegisterRequest user) {
@@ -27,6 +34,6 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(@RequestBody User user) {
-        return service.verfiy(user);
+       return service.verfiy(user);
     }
 }
