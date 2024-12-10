@@ -12,14 +12,14 @@ public class RegisterModeratorRequest {
     private String username;
     private String email;
     private  String password;
-    private String referralCode;
+//    private String referralCode;
 
     public User toEntity() {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        user.setReferralCode(referralCode);
+//        user.setReferralCode(referralCode);
         Set<Roles> roles = new HashSet<>();
         user.setRoles(roles);
         return user;

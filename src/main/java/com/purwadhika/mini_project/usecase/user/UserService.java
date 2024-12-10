@@ -50,7 +50,7 @@ public class UserService {
         return repository.save(newUser);
     }
 
-    public String verfiy(User user) {
+    public String verify(User user) {
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
     if (authentication.isAuthenticated())
