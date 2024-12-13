@@ -27,6 +27,7 @@ public class Category {
     private String iconUrl;
 
     @Size(max = 50)
+    @NotNull
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 

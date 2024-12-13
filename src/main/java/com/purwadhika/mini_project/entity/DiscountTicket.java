@@ -36,7 +36,6 @@ public class DiscountTicket {
     private String title;
 
     @Size(max = 255)
-    @NotNull
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 

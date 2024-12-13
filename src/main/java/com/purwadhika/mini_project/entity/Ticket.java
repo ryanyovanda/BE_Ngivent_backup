@@ -44,6 +44,7 @@ public class Ticket {
     private Integer totalTicket;
 
     @Column(name = "sold_ticket", nullable = false)
+    @ColumnDefault("0")
     private Integer soldTicket;
 
     @Column(name = "available_ticket", nullable = false)

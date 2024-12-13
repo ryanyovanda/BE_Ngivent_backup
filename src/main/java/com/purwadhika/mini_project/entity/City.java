@@ -22,6 +22,7 @@ public class City {
     private Long cityId;
 
     @Size(max = 50)
+    @NotNull
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 

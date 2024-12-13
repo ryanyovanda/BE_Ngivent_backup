@@ -35,6 +35,7 @@ public class Event {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
