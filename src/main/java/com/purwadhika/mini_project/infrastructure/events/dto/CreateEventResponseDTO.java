@@ -34,9 +34,10 @@ public class CreateEventResponseDTO {
     private Integer availableSeats;
     private Integer soldSeats;
 
-    public CreateEventResponseDTO(Long eventId, @NotNull Category category, @Size(max = 100) @NotNull String title, @NotNull String description, @Size(max = 100) @NotNull String location, @NotNull OffsetDateTime eventDate, @NotNull Boolean isFree, BigDecimal price, @NotNull Integer allocatedSeats, Integer availableSeats, Integer soldSeats) {
+    public CreateEventResponseDTO(Long eventId, @NotNull Category category, @NotNull String imageUrl, @Size(max = 100) @NotNull String title, @NotNull String description, @Size(max = 100) @NotNull String location, @NotNull OffsetDateTime eventDate, @NotNull Boolean isFree, BigDecimal price, @NotNull Integer allocatedSeats, Integer availableSeats, Integer soldSeats) {
         this.eventId = eventId;
         this.categoryId = category != null ? category.getCategoryId() : null; // Assuming categoryId is Long in Category
+        this.imageUrl = imageUrl;
         this.title = title;
         this.description = description;
         this.location = location;

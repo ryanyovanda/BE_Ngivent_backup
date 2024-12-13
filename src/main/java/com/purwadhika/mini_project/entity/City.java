@@ -12,19 +12,14 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "cities")
+public class City {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_id_gen")
-    @SequenceGenerator(name = "categories_id_gen", sequenceName = "categories_id_seq", allocationSize = 1)
-    @Column(name = "category_id", nullable = false)
-    private Long categoryId;
-
-    @Size(max = 100)
-    @NotNull
-    @Column(name = "icon_url", nullable = false, length = 100)
-    private String iconUrl;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cities_id_gen")
+    @SequenceGenerator(name = "cities_id_gen", sequenceName = "cities_id_seq", allocationSize = 1)
+    @Column(name = "city_id", nullable = false)
+    private Long cityId;
 
     @Size(max = 50)
     @Column(name = "name", nullable = false, length = 50)

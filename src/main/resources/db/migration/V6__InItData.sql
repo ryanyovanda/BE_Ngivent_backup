@@ -1,5 +1,5 @@
 INSERT INTO categories (name)
-VALUES ('Musik Category');
+VALUES ('Musik');
 
 INSERT INTO events (
     category_id, image_url, title, description, location, event_date,
