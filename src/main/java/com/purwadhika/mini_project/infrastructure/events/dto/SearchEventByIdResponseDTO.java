@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchEventResponseDTO {
+public class SearchEventByIdResponseDTO {
     private Long eventId;
     private String title;
     private String description;

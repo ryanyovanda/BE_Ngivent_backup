@@ -1,21 +1,25 @@
 package com.purwadhika.mini_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "tickets")
 public class Ticket {
+
+    public enum Type {
+        REGULAR,
+        VIP
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tickets_id_gen")
@@ -26,10 +30,14 @@ public class Ticket {
 //    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Set<DiscountTicket> discountTickets = new LinkedHashSet<>();
 
-    @Size(max = 50)
-    @NotNull
-    @Column(name = "type", nullable = false, length = 50)
-    private String type;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "event_id", nullable = false)
+    @JsonBackReference
+    private Event event;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private Type type;
 
     @NotNull
     @ColumnDefault("false")

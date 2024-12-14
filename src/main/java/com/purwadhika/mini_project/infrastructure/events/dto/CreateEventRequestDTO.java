@@ -18,6 +18,9 @@ public class CreateEventRequestDTO {
     @NotNull
     private Long categoryId;
 
+    @NotNull
+    private Long cityId;
+
     @Size(min = 5, max = 255, message = "Title must be between 5 and 255 characters")
     @NotNull(message = "Title is required")
     private String title;
@@ -28,9 +31,6 @@ public class CreateEventRequestDTO {
     @Size(max = 100)
     @NotNull
     private String imageUrl;
-
-    @NotNull
-    private Long cityId;
 
     @Future(message = "Event date must be in the future")
     @NotNull

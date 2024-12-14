@@ -1,5 +1,6 @@
 package com.purwadhika.mini_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -40,8 +41,9 @@ public class Event {
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-//    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<Ticket> tickets = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Ticket> tickets = new LinkedHashSet<>();
 
 //    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Review> reviews = new ArrayList<>();
@@ -64,15 +66,6 @@ public class Event {
     @NotNull
     @Column(name = "event_date", nullable = false)
     private OffsetDateTime eventDate;
-
-    @Column(name = "total_seats", nullable = false)
-    private Integer totalSeats = 0;
-
-    @Column(name = "sold_seats", nullable = false)
-    private Integer soldSeats = 0;
-
-    @Column(name = "available_seats", nullable = false)
-    private Integer availableSeats = 0;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")

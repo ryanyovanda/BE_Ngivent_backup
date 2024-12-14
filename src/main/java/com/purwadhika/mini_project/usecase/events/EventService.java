@@ -10,7 +10,6 @@ import com.purwadhika.mini_project.infrastructure.events.repository.CategoryRepo
 import com.purwadhika.mini_project.infrastructure.events.repository.CityRepository;
 import com.purwadhika.mini_project.infrastructure.events.repository.EventRepository;
 import com.purwadhika.mini_project.infrastructure.events.specification.FilterEventSpecifications;
-import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +20,12 @@ import org.springframework.stereotype.Service;
 import java.time.OffsetDateTime;
 
 @Service
-public class CreateEventService {
+public class EventService {
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
     private final CityRepository cityRepository;
 
-    public CreateEventService(EventRepository eventRepository, CategoryRepository categoryRepository, CityRepository cityRepository) {
+    public EventService(EventRepository eventRepository, CategoryRepository categoryRepository, CityRepository cityRepository) {
         this.eventRepository = eventRepository;
         this.categoryRepository = categoryRepository;
         this.cityRepository = cityRepository;
@@ -47,7 +46,14 @@ public class CreateEventService {
         if (title != null && !title.isEmpty()) {
             specification = specification.and(FilterEventSpecifications.hasTitleName(title));
         }
-        return eventRepository.findAll(specification , pageable);
+
+        Page<Event> events = eventRepository.findAll(specification , pageable);
+
+        if (events.isEmpty()) {
+            throw new RuntimeException("No events found with the specified criteria");
+        }
+
+        return events;
     }
 
     public Event getEventById(Long eventId) {
@@ -55,17 +61,14 @@ public class CreateEventService {
                 .orElseThrow(() -> new RuntimeException("Event not found: " + eventId));
     }
 
-    public CreateEventResponseDTO createEvent(CreateEventRequestDTO dto) {
-        Category category = categoryRepository.findByCategoryId(dto.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found: " + dto.getCategoryId()));
+    public CreateEventResponseDTO createEvent(CreateEventRequestDTO createEventRequestDTO) {
+        Category category = categoryRepository.findByCategoryId(createEventRequestDTO.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found: " + createEventRequestDTO.getCategoryId()));
 
-        City city = cityRepository.findById(dto.getCityId())
-                .orElseThrow(() -> new RuntimeException("City not found: " + dto.getCityId()));
+        City city = cityRepository.findById(createEventRequestDTO.getCityId())
+                .orElseThrow(() -> new RuntimeException("City not found: " + createEventRequestDTO.getCityId()));
 
-        Event event = dto.toEntity(category, city);
-        event.setTotalSeats(0);
-        event.setSoldSeats(0);
-        event.setAvailableSeats(0);
+        Event event = createEventRequestDTO.toEntity(category, city);
         event.setCreatedAt(OffsetDateTime.now());
         event.setUpdatedAt(OffsetDateTime.now());
 
@@ -82,32 +85,32 @@ public class CreateEventService {
         );
     }
 
-    public Event updateEvent(UpdateEventRequestDTO dto) {
-        if (dto.getEventId() == null) {
+    public Event updateEvent(UpdateEventRequestDTO updateEventRequestDTO) {
+        if (updateEventRequestDTO.getEventId() == null) {
             throw new IllegalArgumentException("Event ID is required for update");
         }
 
-        Event event = eventRepository.findById(dto.getEventId())
-                .orElseThrow(() -> new RuntimeException("Event not found: " + dto.getEventId()));
+        Event event = eventRepository.findById(updateEventRequestDTO.getEventId())
+                .orElseThrow(() -> new RuntimeException("Event not found: " + updateEventRequestDTO.getEventId()));
 
-        if (dto.getCategoryId() != null) {
-            Category category = categoryRepository.findById(dto.getCategoryId())
-                    .orElseThrow(() -> new RuntimeException("Category not found: " + dto.getCategoryId()));
+        if (updateEventRequestDTO.getCategoryId() != null) {
+            Category category = categoryRepository.findById(updateEventRequestDTO.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found: " + updateEventRequestDTO.getCategoryId()));
             event.setCategory(category);
         }
 
-        if (dto.getCityId() != null) {
-            City city = cityRepository.findByCityId(dto.getCityId())
-                    .orElseThrow(() -> new RuntimeException("City not found: " + dto.getCityId()));
+        if (updateEventRequestDTO.getCityId() != null) {
+            City city = cityRepository.findByCityId(updateEventRequestDTO.getCityId())
+                    .orElseThrow(() -> new RuntimeException("City not found: " + updateEventRequestDTO.getCityId()));
             event.setCity(city);
         }
 
-        if (dto.getTitle() != null) event.setTitle(dto.getTitle());
-        if (dto.getDescription() != null) event.setDescription(dto.getDescription());
-        if (dto.getImageUrl() != null) event.setImageUrl(dto.getImageUrl());
+        if (updateEventRequestDTO.getTitle() != null) event.setTitle(updateEventRequestDTO.getTitle());
+        if (updateEventRequestDTO.getDescription() != null) event.setDescription(updateEventRequestDTO.getDescription());
+        if (updateEventRequestDTO.getImageUrl() != null) event.setImageUrl(updateEventRequestDTO.getImageUrl());
 
-        if (dto.getEventDate() != null) {
-            event.setEventDate(dto.getEventDate());
+        if (updateEventRequestDTO.getEventDate() != null) {
+            event.setEventDate(updateEventRequestDTO.getEventDate());
         }
 
         return eventRepository.save(event);
