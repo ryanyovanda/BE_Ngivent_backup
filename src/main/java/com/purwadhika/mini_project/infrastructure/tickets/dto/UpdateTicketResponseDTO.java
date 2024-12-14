@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateTicketResponseDTO {
-    private Long eventId;
-    private Long ticketId;
     private Integer type;
     private Integer soldTicket;
     private Integer availableTicket;

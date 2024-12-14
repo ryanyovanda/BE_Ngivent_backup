@@ -32,7 +32,6 @@ public class Ticket {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "event_id", nullable = false)
-    @JsonBackReference
     private Event event;
 
     @Enumerated(EnumType.STRING)

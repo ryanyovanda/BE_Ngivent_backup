@@ -46,26 +46,25 @@ public class TicketService {
     }
 
     public UpdateTicketResponseDTO updateTicket(Long eventId, Long ticketId, int soldSeatsIncrement) {
-        // Find the ticket by ID
-        Ticket ticket = ticketRepository.findByEvent_IdAndTicket_Id(eventId, ticketId)
+        // Find the ticket by event ID and ticket ID
+        Ticket ticket = ticketRepository.findByEvent_IdAndId(eventId, ticketId)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
 
-        // Increment soldSeats
+        // Check if enough tickets are available
         int newSoldSeats = ticket.getSoldTicket() + soldSeatsIncrement;
         if (newSoldSeats > ticket.getTotalTicket()) {
-            throw new IllegalArgumentException(
-                    "Available ticket is sold out"
-            );
+            throw new IllegalArgumentException("Available ticket is sold out");
         }
 
+        // Update ticket fields
         ticket.setSoldTicket(newSoldSeats);
         ticket.setAvailableTicket(ticket.getTotalTicket() - newSoldSeats);
-        ticket.setUpdatedAt(OffsetDateTime.now());
+        ticket.setUpdatedAt(OffsetDateTime.now()); // After all updates
 
-        // Update the ticket in the database
+        // Save the updated ticket to the database
         ticketRepository.save(ticket);
 
-        // Return the updated ticket as a response DTO
+        // Construct and return the response DTO
         return new UpdateTicketResponseDTO();
     }
 }

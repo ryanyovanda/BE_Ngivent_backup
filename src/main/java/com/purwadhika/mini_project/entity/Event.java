@@ -42,7 +42,6 @@ public class Event {
     private City city;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
 //    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
