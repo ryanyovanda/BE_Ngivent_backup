@@ -1,12 +1,12 @@
 package com.purwadhika.mini_project.infrastructure.events.repository;
 
-import com.purwadhika.mini_project.entity.Category;
+import com.purwadhika.mini_project.entity.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
-    Optional<Category> findByCategoryId(Long categoryId);
+public interface CityRepository extends JpaRepository<City, Long> {
+    Optional<City> findByCityId(Long cityId);
 }

@@ -1,0 +1,14 @@
+--CREATE TABLE transactions (
+--    transaction_id BIGSERIAL CONSTRAINT transactions_pk PRIMARY KEY,
+--    event_id BIGINT NOT NULL CONSTRAINT transactions_event_fk REFERENCES events (event_id) ON DELETE CASCADE,
+--    ticket_id BIGINT NOT NULL CONSTRAINT transactions_ticket_fk REFERENCES tickets (ticket_id) ON DELETE CASCADE,
+--    invoice_number VARCHAR(255) NOT NULL UNIQUE,
+--    ticket_quantity INT NOT NULL,
+--    discount_price NUMERIC(12, 2),
+--    final_price NUMERIC(12, 2),
+--    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--    deleted_at TIMESTAMP WITH TIME ZONE
+--);
+--
+--CREATE UNIQUE INDEX transactions_id_uindex ON transactions (transaction_id DESC);

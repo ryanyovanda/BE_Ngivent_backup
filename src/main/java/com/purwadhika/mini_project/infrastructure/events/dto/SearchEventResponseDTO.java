@@ -6,16 +6,15 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateEventResponseDTO {
+public class SearchEventResponseDTO {
     private Long eventId;
     private String title;
     private String description;
-    private Long categoryId;
-    private Long cityId;
+    private String categoryName;
+    private String cityName;
     private String imageUrl;
     private OffsetDateTime eventDate;
 }

@@ -23,8 +23,8 @@ public class Ticket {
     @Column(name = "ticket_id", nullable = false)
     private Long ticketId;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DiscountTicket> discountTickets = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<DiscountTicket> discountTickets = new LinkedHashSet<>();
 
     @Size(max = 50)
     @NotNull

@@ -40,11 +40,11 @@ public class Event {
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Ticket> tickets = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Ticket> tickets = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<>();
+//    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Review> reviews = new ArrayList<>();
 
     @Size(max = 100)
     @NotNull
@@ -65,22 +65,14 @@ public class Event {
     @Column(name = "event_date", nullable = false)
     private OffsetDateTime eventDate;
 
-    @NotNull
-    @Column(name = "start_date", nullable = false)
-    private OffsetDateTime startDate;
-
-    @NotNull
-    @Column(name = "end_date", nullable = false)
-    private OffsetDateTime endDate;
-
     @Column(name = "total_seats", nullable = false)
-    private Integer totalSeats;
+    private Integer totalSeats = 0;
 
     @Column(name = "sold_seats", nullable = false)
-    private Integer soldSeats;
+    private Integer soldSeats = 0;
 
     @Column(name = "available_seats", nullable = false)
-    private Integer availableSeats;
+    private Integer availableSeats = 0;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
