@@ -10,6 +10,7 @@ import com.purwadhika.mini_project.infrastructure.events.repository.CategoryRepo
 import com.purwadhika.mini_project.infrastructure.events.repository.CityRepository;
 import com.purwadhika.mini_project.infrastructure.events.repository.EventRepository;
 import com.purwadhika.mini_project.infrastructure.events.specification.FilterEventSpecifications;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -85,11 +86,8 @@ public class EventService {
         );
     }
 
+    @Transactional
     public Event updateEvent(UpdateEventRequestDTO updateEventRequestDTO) {
-        if (updateEventRequestDTO.getEventId() == null) {
-            throw new IllegalArgumentException("Event ID is required for update");
-        }
-
         Event event = eventRepository.findById(updateEventRequestDTO.getEventId())
                 .orElseThrow(() -> new RuntimeException("Event not found: " + updateEventRequestDTO.getEventId()));
 
@@ -112,7 +110,7 @@ public class EventService {
         if (updateEventRequestDTO.getEventDate() != null) {
             event.setEventDate(updateEventRequestDTO.getEventDate());
         }
-
+        event.setUpdatedAt(OffsetDateTime.now());
         return eventRepository.save(event);
     }
 

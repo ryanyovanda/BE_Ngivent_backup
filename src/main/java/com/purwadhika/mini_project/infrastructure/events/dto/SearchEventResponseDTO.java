@@ -1,12 +1,12 @@
 package com.purwadhika.mini_project.infrastructure.events.dto;
 
-import com.purwadhika.mini_project.entity.Ticket;
+import com.purwadhika.mini_project.infrastructure.tickets.dto.SearchTicketResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +19,5 @@ public class SearchEventResponseDTO {
     private String cityName;
     private String imageUrl;
     private OffsetDateTime eventDate;
-    private Set<Ticket> tickets;
+    private List<SearchTicketResponseDTO> tickets;
 }

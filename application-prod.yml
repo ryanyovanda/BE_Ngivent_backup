@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://<prod-db-host>:5432/<prod-db-name> # Replace with your production DB host, name
+    username: <prod-db-username> # Replace with your production DB username
+    password: <prod-db-password> # Replace with your production DB password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none  # Disable automatic schema creation/update in production
+    open-in-view: false  # Avoid performance issues
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false  # Disable SQL logging in production
+
+  flyway:
+    enabled: true  # Enable Flyway migrations
+    baseline-on-migrate: true  # Automatically baseline an existing DB
+    locations: classpath:db/migration  # Default location for migration scripts
+
+server:
+  port: 8080  # Port for your app to run
+  error:
+    whitelabel:
+      enabled: false  # Disable Whitelabel Error Page
+  servlet:
+    context-path: /api  # Optional base path for all endpoints (e.g., /api/events)
+
+logging:
+  level:
+    root: INFO  # General logging level
+    org.springframework: WARN  # Suppress unnecessary Spring logs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Allow access to all monitoring endpoints
+  health:
+    enabled: true  # Enable health checks

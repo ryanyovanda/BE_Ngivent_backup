@@ -4,8 +4,10 @@ import com.purwadhika.mini_project.entity.Ticket;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    Optional<Ticket> findByEvent_IdAndId(Long eventId, Long ticketId);
+    Optional<Ticket> findByTicketId(Long ticketId);
+    List<Ticket> findByEventEventId(Long eventId);
 }
